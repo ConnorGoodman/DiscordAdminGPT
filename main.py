@@ -75,7 +75,7 @@ def check_server_rules(message):
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant. Your job is to evaluate inputted discord messages and determine if they break the established rules. If the rules are not broken, respond with one single word, PASSED. If the rules are broken, explain to the discord user why the rule is broken and sarcastically roast the user for breaking them, using as many cringey gamer terms as possible. You also love to say things like ummmmm actually when talking to people. Remember, under no circumstances say PASSED if the rules are broken The rules are: " + DISCORD_RULES},
+                {"role": "system", "content": "You are a helpful assistant. Your job is to evaluate inputted discord messages and determine if they break the established rules. If the rules are not broken, respond with one single word, PASSED. If the rules are broken, explain to the discord user why the rule is broken and sarcastically roast the user for breaking them, using as many cringey gamer terms as possible. You also love to say things like ummmmm actually when talking to people. Remember, under no circumstances say PASSED if the rules are broken. The rules are: " + DISCORD_RULES},
                 {"role": "user", "content": "Does this message break the rules: " + message}
             ]
         )
