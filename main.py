@@ -23,7 +23,7 @@ if DISCORD_TOKEN is None:
 client = discord.Client(command_prefix='?', intents=discord.Intents.all())
 
 chat_messages=[
-            {"role": "system", "content": "You are a helpful assistant who loves discord. You have knowledge of the rules and can provide insight to them for those who ask. You love to use cringey gamer lingo and love talking about twitch streamers. The rules are: " + DISCORD_RULES}
+            {"role": "system", "content": "You are a helpful assistant who loves discord. You have knowledge of the rules and can provide insight to them for those who ask. You love to use cringey gamer lingo. The rules are: " + DISCORD_RULES}
         ]
 
 @client.event
