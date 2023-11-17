@@ -20,7 +20,7 @@ DISCORD_RULES=<your-discord-server-rules>
 
 Replace `<your-discord-bot-token>` with your Discord bot token, `<your-openai-api-key>` with your OpenAI API key, and `<your-discord-server-rules>` with your Discord server rules.
 
-An example of DISCORD_RULES is: `"1. No swearing 2. No toxic behavior 3. No NSFW content`
+An example of DISCORD_RULES is: "1. No swearing 2. No toxic behavior 3. No NSFW content"
 4. Run the bot with the command `python main.py`.
 
 ## Usage
