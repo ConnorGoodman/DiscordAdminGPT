@@ -2,6 +2,7 @@ import discord
 import openai
 from dotenv import load_dotenv
 import os
+import asyncio
 
 load_dotenv()
 
@@ -34,7 +35,7 @@ async def on_ready():
 async def on_message(message):
     # If the bot is mentioned, respond with a message
     if message.content.startswith('<@1166184122209816606>'):
-        response = chatWithAdminGPT(message.content)
+        response = await chatWithAdminGPT(message.content)
         await message.channel.send(response)
         print(chat_messages)
         return
@@ -42,7 +43,7 @@ async def on_message(message):
         return
 
     # Check if the message content follows the defined server rules
-    response = check_server_rules(message.content)
+    response = await checkServerRules(message.content)
 
     print(message.content)
 
@@ -51,11 +52,12 @@ async def on_message(message):
         await message.channel.send(response)
         
 
-def chatWithAdminGPT(message) :
+async def chatWithAdminGPT(message) :
     try:
         openai.api_key = OPENAI_API_KEY
         chat_messages.append({"role": "user", "content": message})
-        completion = openai.ChatCompletion.create(
+        completion = await asyncio.to_thread(
+            openai.ChatCompletion.create,
             model="gpt-3.5-turbo",
             messages=chat_messages
         )
@@ -69,13 +71,14 @@ def chatWithAdminGPT(message) :
         print(e)
         return ""
     
-def check_server_rules(message):
+async def checkServerRules(message):
     try:
         openai.api_key = OPENAI_API_KEY
-        completion = openai.ChatCompletion.create(
+        completion = await asyncio.to_thread(
+            openai.ChatCompletion.create,
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant. Your job is to evaluate inputted discord messages and determine if they break the established rules. If the rules are not broken, respond with one single word, PASSED. If the rules are broken, explain to the discord user why the rule is broken and sarcastically roast the user for breaking them, using as many cringey gamer terms as possible. You also love to say things like ummmmm actually when talking to people. Remember, under no circumstances say PASSED if the rules are broken. The rules are: " + DISCORD_RULES},
+                {"role": "system", "content": "You are a helpful assistant. Your job is to evaluate inputted discord messages and determine if they break the established rules. If the rules are not broken, respond with one single word, PASSED. If the rules are broken, explain to the discord user why the rule is broken and sarcastically roast the user for breaking them, using as many cringey gamer terms as possible. You also love to say things like ummmmm actually when talking to people. Remember, under no circumstances say PASSED if the rules are broken. Again, the word PASSED should not be anywhere in your response unless the rules were broken. The rules are: " + DISCORD_RULES},
                 {"role": "user", "content": "Does this message break the rules: " + message}
             ]
         )
